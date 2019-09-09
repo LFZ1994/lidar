@@ -7,6 +7,8 @@ echo  'KERNEL=="ttyUSB*", ATTRS{idVendor}=="10c4", ATTRS{idProduct}=="ea60", MOD
 
 echo  'KERNEL=="ttyUSB*", ATTRS{idVendor}=="10c4", ATTRS{idProduct}=="ea60", MODE:="0777", GROUP:="dialout",  SYMLINK+="rplidar"' >/etc/udev/rules.d/rplidar.rules
 
+echo  'KERNEL=="ttyUSB*", ATTRS{idVendor}=="10c4", ATTRS{idProduct}=="ea60", MODE:="0777", GROUP:="dialout",  SYMLINK+="sclidar"' >/etc/udev/rules.d/sclidar.rules
+
 
 service udev reload
 sleep 1
