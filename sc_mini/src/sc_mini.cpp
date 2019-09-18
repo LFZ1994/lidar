@@ -460,14 +460,18 @@ namespace sc_m_c
 
 		for(i=0; i<temp_Size*ROS_N_MUL; i++)
 		{
-			scan_out->ranges[i] = 0; //note:将要发布的激光类距离数据清零，保证做插值时其他数据为零
+			// scan_out->ranges[i] = 0; //note:将要发布的激光类距离数据清零，保证做插值时其他数据为零
+			scan_out->ranges[i] = std::numeric_limits<float>::infinity();
 		}
 		for (i=0;i<Size;i++)
 		{
 			temp_i = (int)(Angle_in[i] / (360.0F/(ROS_N_MUL*temp_Size)) + 0.5); //note:计算出对应的插值的位置
 			temp_i = (temp_i >= temp_Size*ROS_N_MUL) ? 0 : temp_i;
 			temp_i = (temp_i < 0) ? 0 : temp_i;
-			scan_out->ranges[temp_i] = scan_in->ranges[i];
+			if(scan_in->ranges[i] == 0.0)
+				scan_out->ranges[temp_i] = std::numeric_limits<float>::infinity();
+			else
+				scan_out->ranges[temp_i] = scan_in->ranges[i];
 			scan_out->intensities[temp_i] = scan_out->ranges[temp_i] == 0 ? 0 : 127; //note:距离值为0的数据灰度值为0，距离大于0数据灰度值设为127
 		}
 
